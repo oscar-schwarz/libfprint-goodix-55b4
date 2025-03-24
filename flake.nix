@@ -10,7 +10,7 @@
           pkgs = import nixpkgs {inherit system;};
         });
   in {
-    packages = forAllSystems ({pkgs, ...}: {
+    packages = forAllSystems ({pkgs, ...}: rec {
       default = pkgs.stdenv.mkDerivation {
         pname = "libfprint-goodixtls-55x4";
         version = "r1802-6e4fdc0";
@@ -68,6 +68,9 @@
           license = pkgs.lib.licenses.lgpl21Only;
           platforms = pkgs.lib.platforms.linux;
         };
+      };
+      fprintd = pkgs.fprintd.override {
+        libfprint = default;
       };
     });
   };
